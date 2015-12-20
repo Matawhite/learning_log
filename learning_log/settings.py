@@ -115,18 +115,23 @@ BOOTSTRAP = {
 
 # Heroku settings
 
+# Heroku settings
 if os.getcwd() == '/app':
-    import dj_datebase_url
-    DATABASES = { 'default': dj_datebase_url.config(default='postgress://localhost')}
-
-    # Honor the 'X-Forward-Proto' header for request.is.secure().
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.config(default='postgres://localhost')
+    }
+    
+    # Honor the 'X-Forwarded-Proto' header for request.is_secure().
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-    # Allow all host headers.
-    ALLOWED_HOSTS = ['*']
+    
+    # Only allow heroku to host the project.
+    ALLOWED_HOSTS = ['learning-log-final.herokuapp.com']
+    DEBUG = False
 
     # Static asset config
-
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     STATIC_ROOT = 'staticfiles'
-    STATICFILES_DIR = ( os.path.join(BASE_DIR, 'static'))
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'static'),
+    )
