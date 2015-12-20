@@ -1,0 +1,3 @@
+evn/
+_pycache_/
+*.sqlite3

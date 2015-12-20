@@ -112,3 +112,21 @@ LOGIN_URL = '/users/login'
 BOOTSTRAP = {
     'include_jquery': True,
 }
+
+# Heroku settings
+
+if os.getcwd() == '/app':
+    import dj_datebase_url
+    DATABASES = { 'default': dj_datebase_url.config(default='postgress://localhost')}
+
+    # Honor the 'X-Forward-Proto' header for request.is.secure().
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+    # Allow all host headers.
+    ALLOWED_HOSTS = ['*']
+
+    # Static asset config
+
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    STATIC_ROOT = 'staticfiles'
+    STATICFILES_DIR = ( os.path.join(BASE_DIR, 'static'))
